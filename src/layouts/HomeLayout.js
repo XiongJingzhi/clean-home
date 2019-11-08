@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Switch, Route } from 'react-router-dom'
 import { useHistory, useLocation } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
 import { colors, fontSize } from '@styles/styles'
@@ -6,18 +7,20 @@ import { ReactComponent as HomeIcon } from '@icons/home.svg'
 import { ReactComponent as HomeIconFill } from '@icons/home-fill.svg'
 import { ReactComponent as UserIcon } from '@icons/user.svg'
 import { ReactComponent as UserIconFill } from '@icons/user-fill.svg'
+import Home from '@/pages/home'
+import Profile from '@/pages/profile'
 
-export default function HomeLayout(props) {
-  const {
-    children
-  } = props
+export default function HomeLayout({match}) {
   const [hidden] = useState(false)
   const history = useHistory()
   const location = useLocation()
-  
+
   return (
     <>
-      {children}
+      <Switch>
+        <Route path={match.path} exact component={Home} />
+        <Route path={`${match.path}profile`} component={Profile} />
+      </Switch>
       <TabBar
         unselectedTintColor={colors["background-color"]}
         tintColor={colors["theme-color"]}
@@ -45,7 +48,12 @@ export default function HomeLayout(props) {
           selected={location.pathname === '/profile'}
           onPress={() => {
             if (location.pathname === '/profile') return
-            history.push('profile')
+            history.push({
+              pathname: '/profile',
+              state: {
+                fromProfile: true
+              }
+            })
           }}
           className={{fontSize: fontSize["font-size-m"]}}
         >
