@@ -18,11 +18,12 @@ export default class RouteConfig extends React.Component{
     return(
       <Router>
         <Switch>
-          <Route path="/" component={HomeLayout} />
-          <Route path="/news/:detail" component={NewsDetail} />
+          <Route path="/" exact component={HomeLayout} />
+          <Route path="/profile" exact component={HomeLayout} />
           <Route path="/news" exact component={News} />
-          <Route path="/service/:detail" component={ServiceDetail} />
+          <Route path="/news/:detail" component={NewsDetail} />
           <Route path="/service" exact component={Service} />
+          <Route path="/service/:detail" component={ServiceDetail} />
           <Route path="/consult" component={Consult} />
           <Route path="/404" component={NotFound} />
           <Redirect to="/404" />
